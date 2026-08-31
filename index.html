@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>将棋 AI対戦ツール</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/board.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>将棋 AI対戦ツール</h1>
+            <div class="game-info">
+                <div class="player-info">
+                    <span class="player-name">先手(人間)</span>
+                    <span class="player-turn" id="player-turn">○</span>
+                </div>
+                <div class="game-status" id="game-status">準備中</div>
+                <div class="player-info">
+                    <span class="player-turn" id="ai-turn">●</span>
+                    <span class="player-name">後手(AI)</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-board-wrapper">
+                <!-- 将棋盤 -->
+                <div class="shogi-board" id="shogi-board">
+                    <div class="board-grid">
+                        <div class="rank-labels">
+                            <div class="rank-label">9</div>
+                            <div class="rank-label">8</div>
+                            <div class="rank-label">7</div>
+                            <div class="rank-label">6</div>
+                            <div class="rank-label">5</div>
+                            <div class="rank-label">4</div>
+                            <div class="rank-label">3</div>
+                            <div class="rank-label">2</div>
+                            <div class="rank-label">1</div>
+                        </div>
+                        <div class="board-squares" id="board-squares"></div>
+                        <div class="file-labels">
+                            <div class="file-label">a</div>
+                            <div class="file-label">b</div>
+                            <div class="file-label">c</div>
+                            <div class="file-label">d</div>
+                            <div class="file-label">e</div>
+                            <div class="file-label">f</div>
+                            <div class="file-label">g</div>
+                            <div class="file-label">h</div>
+                            <div class="file-label">i</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 持ち駒表示エリア -->
+                <div class="captured-pieces-container">
+                    <div class="captured-pieces human">
+                        <h3>先手の駒</h3>
+                        <div class="pieces-grid" id="human-captured"></div>
+                    </div>
+                    <div class="captured-pieces ai">
+                        <h3>後手の駒</h3>
+                        <div class="pieces-grid" id="ai-captured"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- コントロールパネル -->
+            <aside class="control-panel">
+                <div class="controls">
+                    <button id="new-game-btn" class="btn btn-primary">新規ゲーム</button>
+                    <button id="undo-btn" class="btn btn-secondary">手を戻す</button>
+                    <button id="resign-btn" class="btn btn-danger">投了</button>
+                </div>
+
+                <div class="difficulty-panel">
+                    <h3>難易度設定</h3>
+                    <div class="difficulty-options">
+                        <label>
+                            <input type="radio" name="difficulty" value="easy" checked>
+                            易しい
+                        </label>
+                        <label>
+                            <input type="radio" name="difficulty" value="normal">
+                            普通
+                        </label>
+                        <label>
+                            <input type="radio" name="difficulty" value="hard">
+                            難しい
+                        </label>
+                        <label>
+                            <input type="radio" name="difficulty" value="expert">
+                            高度
+                        </label>
+                    </div>
+                </div>
+
+                <div class="move-history">
+                    <h3>手番履歴</h3>
+                    <div class="move-list" id="move-list"></div>
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            <p>将棋 AI対戦ツール v1.0 | <a href="#">ルール説明</a> | <a href="#">設定</a></p>
+        </footer>
+    </div>
+
+    <!-- ゲームロジックスクリプト -->
+    <script src="js/board.js"></script>
+    <script src="js/pieces.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
