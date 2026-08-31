@@ -1,0 +1,315 @@
+/* 将棋盤スタイル */
+.shogi-board {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #f9f6f0;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.board-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 40px repeat(9, 55px) 40px;
+    grid-template-rows: 40px repeat(9, 55px) 40px;
+    gap: 0;
+    background: #d4a574;
+    padding: 10px;
+    border: 3px solid #8b4513;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.board-grid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 54px,
+            rgba(0, 0, 0, 0.1) 54px,
+            rgba(0, 0, 0, 0.1) 55px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 54px,
+            rgba(0, 0, 0, 0.1) 54px,
+            rgba(0, 0, 0, 0.1) 55px
+        );
+    pointer-events: none;
+    border-radius: 2px;
+}
+
+.rank-labels {
+    grid-column: 1;
+    grid-row: 2 / span 9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    padding-right: 8px;
+}
+
+.rank-label {
+    width: 30px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.file-labels {
+    grid-column: 2 / span 9;
+    grid-row: 11;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.file-label {
+    width: 55px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* 盤目 */
+.board-squares {
+    grid-column: 2 / span 9;
+    grid-row: 2 / span 9;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 0;
+}
+
+.square {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #d4a574 0%, #c99563 100%);
+    border: 1px solid #8b4513;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.square:hover {
+    background: linear-gradient(135deg, #deb887 0%, #d4a574 100%);
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.square.selected {
+    background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+    box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.5), 0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+.square.valid-move {
+    box-shadow: inset 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+.square.valid-move::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #4CAF50;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.square.last-move {
+    background: linear-gradient(135deg, #ffeb99 0%, #ffe680 100%);
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* 駒のスタイル */
+.piece {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: grab;
+    user-select: none;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+}
+
+.piece:active {
+    cursor: grabbing;
+}
+
+.piece.human {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a3f 100%);
+    color: white;
+    border: 2px solid #c92a2a;
+    box-shadow: 0 4px 8px rgba(201, 42, 42, 0.3);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.piece.human:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(201, 42, 42, 0.5);
+}
+
+.piece.ai {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44b3aa 100%);
+    color: white;
+    border: 2px solid #087e8b;
+    box-shadow: 0 4px 8px rgba(8, 126, 139, 0.3);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.piece.ai:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(8, 126, 139, 0.5);
+}
+
+.piece.promoted {
+    background: linear-gradient(135deg, #ffd700 0%, #ffb90f 100%);
+    color: #333;
+    border: 2px solid #ff8c00;
+}
+
+.piece.dragging {
+    opacity: 0.7;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* 持ち駒表示 */
+.captured-pieces-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.captured-pieces {
+    background: #f9f6f0;
+    border: 2px solid #d4a574;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.captured-pieces h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.captured-pieces.human h3 {
+    color: #c92a2a;
+}
+
+.captured-pieces.ai h3 {
+    color: #087e8b;
+}
+
+.pieces-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 50px;
+}
+
+.captured-piece {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    position: relative;
+}
+
+.captured-piece.human {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a3f 100%);
+    color: white;
+    border: 1px solid #c92a2a;
+}
+
+.captured-piece.ai {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44b3aa 100%);
+    color: white;
+    border: 1px solid #087e8b;
+}
+
+.piece-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FFD700;
+    color: #333;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid #333;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .board-grid {
+        grid-template-columns: 30px repeat(9, 40px) 30px;
+        grid-template-rows: 30px repeat(9, 40px) 30px;
+        padding: 8px;
+    }
+
+    .square {
+        width: 40px;
+        height: 40px;
+    }
+
+    .piece {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .captured-pieces-container {
+        grid-template-columns: 1fr;
+    }
+
+    .rank-label,
+    .file-label {
+        font-size: 11px;
+    }
+}
